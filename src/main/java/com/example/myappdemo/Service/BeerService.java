@@ -4,6 +4,8 @@ import com.example.myappdemo.Model.Beer;
 import com.example.myappdemo.Repository.BeerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BeerService {
 
@@ -18,7 +20,15 @@ public class BeerService {
     }
 
     public Beer saveBeer(Beer beer) {
-        return beer;
+        Beer newBeer  = new Beer();
+        newBeer.setName(beer.getName());
+        newBeer.setAlcoholContent(beer.getAlcoholContent());
+        beerRepository.save(newBeer);
+        return newBeer;
+    }   public List<Beer> getAllBeers() {
+
+        List<Beer> beers = beerRepository.findAll();
+        return beers;
     }
 
     public Beer updateBeer(Long id, Beer beer) {

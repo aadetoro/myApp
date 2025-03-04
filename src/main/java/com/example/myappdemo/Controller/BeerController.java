@@ -4,21 +4,33 @@ import com.example.myappdemo.Service.BeerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
-@RequiredArgsConstructor
+
 @RestController
 @RequestMapping("/api/beer")
 public class BeerController {
 
     private final BeerService beerService;
 
-    @GetMapping("/{id}")
-    public Beer getBeerById() {
-        return new Beer(getBeerById().getId(), "trophy",12.9);
+    public BeerController(BeerService beerService) {
+        this.beerService = beerService;
     }
 
-    @PostMapping
-    public Beer createBeer(@RequestBody Beer beer) {
+
+    @GetMapping("/{id}")
+    public Beer getBeerById() {
+        return new Beer(1L, "trophy",12.9);
+    }
+
+    // this is to get all the beers
+    @GetMapping("/all")
+    public List<Beer> getBeers() {
+        return beerService.getAllBeers();
+    }
+
+    @PostMapping("/create")
+    public Beer createBeer(@RequestBody  Beer beer) {
         return beerService.saveBeer(beer);
     }
 
